@@ -1,0 +1,9 @@
+language: node_js
+node_js: "10"
+
+jobs:
+  include:
+    - name: "Test"
+      script: yarn test
+    - name: "Linter"
+      script: yarn lint
