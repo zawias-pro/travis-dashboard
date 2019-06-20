@@ -1,53 +1,90 @@
 import React from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Avatar, Button, Container, CssBaseline, makeStyles, TextField, Typography } from '@material-ui/core';
+import { Avatar, Button, Container, CssBaseline, TextField, Typography } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white,
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+interface FormState {
+  ready: boolean;
+  accessTokenValue: string;
+  travisReposValue: string;
+}
 
-const Form = () => {
-  const classes = useStyles();
+const ACCESS_TOKEN_LS_KEY = 'td_access_token';
+const TRAVIS_REPOS_LS_KEY = 'td_travis_repos';
 
-  return (
-    <Container maxWidth="xs" component="main">
-      <CssBaseline/>
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon/>
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Travis dashboard
-        </Typography>
-        <form className={classes.form}>
-          <TextField label="Access token" fullWidth margin="normal" />
-          <TextField label="Repositories" fullWidth margin="normal" multiline />
-          <Button variant="contained" color="primary" fullWidth className={classes.submit}>Go to dashboard</Button>
-        </form>
-      </div>
-    </Container>
-  );
-};
+class Form extends React.Component<{}, FormState> {
+  public state = {
+    ready: false,
+    accessTokenValue: '',
+    travisReposValue: '',
+  };
+
+  public componentDidMount(): void {
+    this.setState({
+      ready: true,
+      accessTokenValue: localStorage.getItem(ACCESS_TOKEN_LS_KEY) || '',
+      travisReposValue: localStorage.getItem(TRAVIS_REPOS_LS_KEY) || '',
+    });
+  }
+
+  public render() {
+    const {accessTokenValue, travisReposValue, ready} = this.state;
+    const disabled = !ready;
+
+    return (
+      <Container maxWidth="xs" component="main">
+        <CssBaseline/>
+        <div>
+          <Avatar>
+            <LockOutlinedIcon/>
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Travis dashboard
+          </Typography>
+          <form>
+            <TextField
+              disabled={disabled}
+              label="Access token"
+              fullWidth
+              margin="normal"
+              value={accessTokenValue}
+              onChange={this.onChange(ACCESS_TOKEN_LS_KEY)}
+            />
+            <TextField
+              disabled={disabled}
+              label="Repositories"
+              fullWidth
+              margin="normal"
+              multiline
+              value={travisReposValue}
+              onChange={this.onChange(TRAVIS_REPOS_LS_KEY)}
+            />
+            <Button
+              disabled={disabled}
+              variant="contained"
+              color="primary"
+              fullWidth
+            >
+              Go to dashboard
+            </Button>
+          </form>
+        </div>
+      </Container>
+    );
+  }
+
+  private onChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (key === ACCESS_TOKEN_LS_KEY) {
+      this.setState({
+        accessTokenValue: event.target.value,
+      });
+    } else if (key === TRAVIS_REPOS_LS_KEY) {
+      this.setState({
+        travisReposValue: event.target.value,
+      });
+    }
+
+    localStorage.setItem(key, event.target.value);
+  }
+}
 
 export { Form };
