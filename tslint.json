@@ -27,7 +27,8 @@
     "arrow-parens": [true, "ban-single-arg-parens"],
     "no-submodule-imports": false,
     "object-literal-sort-keys": false,
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "object-literal-key-quotes": false
   },
   "linterOptions": {
     "exclude": []
