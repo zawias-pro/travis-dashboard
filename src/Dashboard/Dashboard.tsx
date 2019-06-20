@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import { TRAVIS_REPOS_LS_KEY } from '../config';
 import { RepoStringParser } from '../service/RepoStringParser';
+import { ACCESS_TOKEN_LS_KEY, TRAVIS_REPOS_LS_KEY } from '../config';
 import { DashboardDataFetcher } from '../service/DashboardDataFetcher';
 
 class Dashboard extends Component {
@@ -10,10 +10,11 @@ class Dashboard extends Component {
   constructor(props: {}) {
     super(props);
 
-    const localStorageEntry = localStorage.getItem(TRAVIS_REPOS_LS_KEY);
-    const repositories = RepoStringParser.parse(localStorageEntry || '');
+    const accessKey = localStorage.getItem(ACCESS_TOKEN_LS_KEY) || '';
+    const travisRepoString = localStorage.getItem(TRAVIS_REPOS_LS_KEY);
+    const repositories = RepoStringParser.parse(travisRepoString || '');
 
-    this.fetcher = new DashboardDataFetcher(repositories);
+    this.fetcher = new DashboardDataFetcher(accessKey, repositories);
   }
 
   public componentDidMount(): void {
