@@ -16,6 +16,7 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
+    "rxjs": "^6.5.2",
     "tslint": "^5.17.0",
     "tslint-react": "^4.0.0",
     "typescript": "3.4.5"

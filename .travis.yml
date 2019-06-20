@@ -4,6 +4,6 @@ node_js: "10"
 jobs:
   include:
     - name: "Test"
-      script: yarn test --passWithNoTests
+      script: yarn test
     - name: "Linter"
       script: yarn lint

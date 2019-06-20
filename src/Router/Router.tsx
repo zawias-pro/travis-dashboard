@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { Form } from '../sections/Form';
-import { Dashboard } from '../sections/Dashboard';
+import { Form } from '../Form';
+import { Dashboard } from '../Dashboard';
 
 const Router = () => (
   <BrowserRouter>
