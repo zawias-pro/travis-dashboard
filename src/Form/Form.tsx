@@ -1,15 +1,16 @@
 import React from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Avatar, Button, Container, CssBaseline, TextField, Typography } from '@material-ui/core';
+import {
+  Avatar, Button, Container, CssBaseline, TextField, Typography,
+} from '@material-ui/core';
+
+import { ACCESS_TOKEN_LS_KEY, TRAVIS_REPOS_LS_KEY } from '../config';
 
 interface FormState {
   ready: boolean;
   accessTokenValue: string;
   travisReposValue: string;
 }
-
-const ACCESS_TOKEN_LS_KEY = 'td_access_token';
-const TRAVIS_REPOS_LS_KEY = 'td_travis_repos';
 
 class Form extends React.Component<{}, FormState> {
   public state = {

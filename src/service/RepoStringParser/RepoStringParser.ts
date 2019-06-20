@@ -1,7 +1,4 @@
-interface Repository {
-  name: string;
-  slug: string;
-}
+import { Repository } from '../../interface/Repository';
 
 class RepoStringParser {
   public static parse(repoString: string): Repository[] {
