@@ -71,7 +71,7 @@ class DashboardDataFetcher {
       })),
       // @ts-ignore
       catchError(error => {
-        return of('error');
+        return of(error);
       }),
     );
   }
