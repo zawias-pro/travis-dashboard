@@ -35,7 +35,7 @@ const TopBar: React.FC = () => {
           <MenuIcon/>
         </IconButton>
         <Typography variant="h6" className={classes.title}>
-          News
+          Travieso
         </Typography>
         <Button color="inherit">Login</Button>
       </Toolbar>

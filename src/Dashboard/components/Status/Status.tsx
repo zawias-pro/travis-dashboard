@@ -11,7 +11,7 @@ interface StatusProps {
 const Status: React.FunctionComponent<StatusProps> = ({
   status,
 }) => {
-  const startedAt = status.body ? moment(status.body.build.finishedAt) : null;
+  const startedAt = status.body && status.body.build.finishedAt ? moment(status.body.build.finishedAt) : null;
   const finishedAt = status.body ? moment(status.body.build.startedAt) : null;
   const diff = startedAt && finishedAt ? startedAt.diff(finishedAt, 'minutes') : null;
 

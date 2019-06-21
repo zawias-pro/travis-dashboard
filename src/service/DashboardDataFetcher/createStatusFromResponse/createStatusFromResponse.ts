@@ -15,7 +15,7 @@ const getValidationError = (response: any): Error | null => {
         previous_state: yup.string(),
         message: yup.string(),
         started_at: yup.string(),
-        finished_at: yup.string(),
+        finished_at: yup.string().nullable(),
         created_by: yup.object().shape({
           login: yup.string(),
         }),

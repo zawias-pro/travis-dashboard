@@ -10,7 +10,7 @@ export interface TravisStatus {
       previousState: string;
       commit: string;
       startedAt: string;
-      finishedAt: string;
+      finishedAt: string | null;
       author: string;
     };
   };
