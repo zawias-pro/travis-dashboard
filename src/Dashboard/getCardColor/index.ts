@@ -1,0 +1,1 @@
+export { getCardColor } from './getCardColor';

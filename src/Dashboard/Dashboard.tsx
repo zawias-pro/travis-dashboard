@@ -2,8 +2,8 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 
 import { Status } from './components/Status';
+import { ErrorStatus } from './components/ErrorStatus';
 import { TravisStatus } from '../interface/TravisStatus';
-import { RouterButton } from '../components/RouterButton';
 import { RepoStringParser } from '../service/RepoStringParser';
 import { ACCESS_TOKEN_LS_KEY, TRAVIS_REPOS_LS_KEY } from '../config';
 import { DashboardDataFetcher } from '../service/DashboardDataFetcher';
@@ -41,16 +41,17 @@ class Dashboard extends React.Component<{}, DashboardState> {
     }
 
     return (
-      <div>
-        <RouterButton to="/">Back</RouterButton>
-        <Grid container spacing={5}>
-          {statuses.map((status: TravisStatus) => (
-            <Grid item key={status.name} xs={4}>
+      <Grid container spacing={5}>
+        {statuses.map((status: TravisStatus) => (
+          <Grid item key={status.name} xs={4}>
+            {status.error ? (
+              <ErrorStatus status={status}/>
+            ) : (
               <Status status={status}/>
-            </Grid>
-          ))}
-        </Grid>
-      </div>
+            )}
+          </Grid>
+        ))}
+      </Grid>
     );
   }
 

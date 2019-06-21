@@ -1,7 +1,8 @@
 import React from 'react';
 import moment from 'moment';
-import { Paper, Typography } from '@material-ui/core';
+import { Chip, Paper, Typography } from '@material-ui/core';
 
+import { getCardColor } from '../../getCardColor';
 import { TravisStatus } from '../../../interface/TravisStatus';
 
 interface StatusProps {
@@ -11,24 +12,26 @@ interface StatusProps {
 const Status: React.FunctionComponent<StatusProps> = ({
   status,
 }) => {
-  const startedAt = status.body && status.body.build.finishedAt ? moment(status.body.build.finishedAt) : null;
-  const finishedAt = status.body ? moment(status.body.build.startedAt) : null;
-  const diff = startedAt && finishedAt ? startedAt.diff(finishedAt, 'minutes') : null;
+  if (!status.body) {
+    return null;
+  }
 
-  const backgroundColor = status.body ? (
-    status.body.build.state === 'passed' ? 'green' : 'red'
-  ) : 'gray';
+  const { build, description, language, branch } = status.body;
+
+  const startedAt = moment(status.body.build.startedAt);
+  const finishedAt = build.finishedAt ? moment(build.finishedAt) : null;
+  const diff = finishedAt ? startedAt.diff(finishedAt, 'minutes') : null;
+
+  const backgroundColor = getCardColor(status);
 
   return (
     <Paper style={{ padding: 10, backgroundColor }}>
       <Typography variant="h5">
-        {status.name}
+        {status.name} <Chip label={status.body.branch} />
       </Typography>
       <ul>
-        <li>{status.name}</li>
         {status.body && (
           <>
-            <li>{status.body.branch}</li>
             <li>{status.body.language}</li>
             <li>{status.body.build.previousState} -> {status.body.build.state}</li>
             <li>{status.body.build.commit}</li>
@@ -36,9 +39,6 @@ const Status: React.FunctionComponent<StatusProps> = ({
             <li>{status.body.build.finishedAt}</li>
             <li>{diff} min</li>
           </>
-        )}
-        {status.error && (
-          JSON.stringify(status.error.message)
         )}
       </ul>
     </Paper>
