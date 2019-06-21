@@ -1,8 +1,8 @@
-import { from, of } from 'rxjs';
-import { combineAll, delay, map, mergeMap } from 'rxjs/operators';
+import { from, Observable, of } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
+import { combineAll, delay, map, mergeMap, catchError } from 'rxjs/operators';
 
 import { Repository } from '../../interface/Repository';
-import { ajax } from "rxjs/ajax";
 
 class DashboardDataFetcher {
   private accessToken: string;
@@ -35,14 +35,44 @@ class DashboardDataFetcher {
       );
   }
 
-  private getResponse = (repository: Repository) => {
+  private getResponse = (repository: Repository): Observable<any> => {
+    const isTokenEmpty = this.accessToken === '';
+
+    const serverAddress = isTokenEmpty
+      ? 'https://api.travis-ci.org'
+      : 'https://api.travis-ci.com';
+
+    const authorizationHeader = isTokenEmpty
+      ? {}
+      : {'Authorization': `token ${this.accessToken}`};
+
     return ajax.getJSON(
-      `https://api.travis-ci.com/repo/${repository.slug}?include=default_branch.last_build`,
+      `${serverAddress}/repo/${repository.slug}?include=branch.last_build`,
       {
         'Travis-Api-Version': 3,
         'User-Agent': 'Travis dashboard by zawias-pro',
-        'Authorization': `token ${this.accessToken}`,
+        ...authorizationHeader,
       },
+    ).pipe(
+      map((response: any) => ({
+        name: response.name,
+        fullName: response.slug,
+        description: response.description,
+        language: response.github_language,
+        branch: response.default_branch.name,
+        build: {
+          state: response.default_branch.last_build.state,
+          previousState: response.default_branch.last_build.previous_state,
+          commit: response.default_branch.last_build.commit.message,
+          startedAt: response.default_branch.last_build.started_at,
+          finishedAt: response.default_branch.last_build.finished_at,
+          author: response.default_branch.last_build.created_by.login,
+        },
+      })),
+      // @ts-ignore
+      catchError(error => {
+        return of('error');
+      }),
     );
   }
 }
