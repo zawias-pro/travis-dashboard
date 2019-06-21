@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Grid } from '@material-ui/core';
 
-import { RouterButton } from '../components/RouterButton';
+import { Status } from './components/Status';
 import { TravisStatus } from '../interface/TravisStatus';
+import { RouterButton } from '../components/RouterButton';
 import { RepoStringParser } from '../service/RepoStringParser';
 import { ACCESS_TOKEN_LS_KEY, TRAVIS_REPOS_LS_KEY } from '../config';
 import { DashboardDataFetcher } from '../service/DashboardDataFetcher';
-import { Status } from "./components/Status";
 
 interface DashboardState {
   statuses: any;
 }
 
-class Dashboard extends Component<{}, DashboardState> {
+class Dashboard extends React.Component<{}, DashboardState> {
   private fetcher: DashboardDataFetcher;
 
   constructor(props: {}) {
@@ -33,7 +34,7 @@ class Dashboard extends Component<{}, DashboardState> {
   }
 
   public render() {
-    const { statuses } = this.state;
+    const {statuses} = this.state;
 
     if (!statuses) {
       return <div>Loading...</div>;
@@ -42,10 +43,13 @@ class Dashboard extends Component<{}, DashboardState> {
     return (
       <div>
         <RouterButton to="/">Back</RouterButton>
-        <br />
-        {statuses.map((status: TravisStatus) => (
-          <Status status={status} key={status.name} />
-        ))}
+        <Grid container spacing={5}>
+          {statuses.map((status: TravisStatus) => (
+            <Grid item key={status.name} xs={4}>
+              <Status status={status}/>
+            </Grid>
+          ))}
+        </Grid>
       </div>
     );
   }

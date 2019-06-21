@@ -18,6 +18,7 @@ interface RouterButtonProps extends ButtonProps {
 
 const RouterButton: React.FC<RouterButtonProps> = ({
   to,
+  // tslint:disable-next-line:trailing-comma
   ...buttonProps
 }) => (
   // @ts-ignore

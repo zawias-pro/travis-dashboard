@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { Paper, Typography } from '@material-ui/core';
 
 import { TravisStatus } from '../../../interface/TravisStatus';
 
@@ -14,8 +15,15 @@ const Status: React.FunctionComponent<StatusProps> = ({
   const finishedAt = status.body ? moment(status.body.build.startedAt) : null;
   const diff = startedAt && finishedAt ? startedAt.diff(finishedAt, 'minutes') : null;
 
+  const backgroundColor = status.body ? (
+    status.body.build.state === 'passed' ? 'green' : 'red'
+  ) : 'gray';
+
   return (
-    <div style={{ border: '1px solid #ccc' }}>
+    <Paper style={{ padding: 10, backgroundColor }}>
+      <Typography variant="h5">
+        {status.name}
+      </Typography>
       <ul>
         <li>{status.name}</li>
         {status.body && (
@@ -30,10 +38,10 @@ const Status: React.FunctionComponent<StatusProps> = ({
           </>
         )}
         {status.error && (
-          JSON.stringify(status.error)
+          JSON.stringify(status.error.message)
         )}
       </ul>
-    </div>
+    </Paper>
   );
 };
 

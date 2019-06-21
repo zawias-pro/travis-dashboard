@@ -1,7 +1,7 @@
 import React from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
-  Avatar, Container, CssBaseline, TextField, Typography,
+  Avatar, Container, TextField, Typography,
 } from '@material-ui/core';
 
 import { RouterButton } from '../components/RouterButton';
@@ -34,7 +34,6 @@ class Form extends React.Component<{}, FormState> {
 
     return (
       <Container maxWidth="xs" component="main">
-        <CssBaseline/>
         <div>
           <Avatar>
             <LockOutlinedIcon/>
