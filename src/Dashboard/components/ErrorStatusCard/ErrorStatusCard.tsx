@@ -8,7 +8,7 @@ interface ErrorStatusProps {
   status: TravisStatus;
 }
 
-const ErrorStatus: React.FunctionComponent<ErrorStatusProps> = ({
+const ErrorStatusCard: React.FunctionComponent<ErrorStatusProps> = ({
   status,
 }) => {
   const backgroundColor = getCardColor(status);
@@ -28,4 +28,4 @@ const ErrorStatus: React.FunctionComponent<ErrorStatusProps> = ({
   );
 };
 
-export { ErrorStatus };
+export { ErrorStatusCard };

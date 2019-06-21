@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 
-import { Status } from './components/Status';
-import { ErrorStatus } from './components/ErrorStatus';
+import { StatusCard } from './components/StatusCard';
+import { ErrorStatusCard } from './components/ErrorStatusCard';
 import { TravisStatus } from '../interface/TravisStatus';
 import { RepoStringParser } from '../service/RepoStringParser';
 import { ACCESS_TOKEN_LS_KEY, TRAVIS_REPOS_LS_KEY } from '../config';
@@ -45,9 +45,9 @@ class Dashboard extends React.Component<{}, DashboardState> {
         {statuses.map((status: TravisStatus) => (
           <Grid item key={status.name} xs={4}>
             {status.error ? (
-              <ErrorStatus status={status}/>
+              <ErrorStatusCard status={status}/>
             ) : (
-              <Status status={status}/>
+              <StatusCard status={status}/>
             )}
           </Grid>
         ))}

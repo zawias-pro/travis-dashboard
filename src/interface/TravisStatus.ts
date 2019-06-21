@@ -1,3 +1,5 @@
+import { Moment } from 'moment';
+
 export interface TravisStatus {
   name: string;
   error: Error | null;
@@ -9,9 +11,10 @@ export interface TravisStatus {
       state: string;
       previousState: string;
       commit: string;
-      startedAt: string;
-      finishedAt: string | null;
+      startedAt: Moment;
+      finishedAt: Moment | null;
       author: string;
+      durationMinutes: number | null;
     };
   };
 }

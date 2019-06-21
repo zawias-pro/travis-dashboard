@@ -1,10 +1,10 @@
 import * as yup from 'yup';
+import moment from 'moment';
 
 import { TravisStatus } from '../../../interface/TravisStatus';
 
 const getValidationError = (response: any): Error | null => {
   const schema = yup.object().shape({
-    name: yup.string(),
     slug: yup.string(),
     description: yup.string().nullable(),
     language: yup.string().nullable(),
@@ -39,6 +39,14 @@ const createStatusFromResponse = (response: any): TravisStatus => {
     throw validationError;
   }
 
+  const startedAt = moment(response.default_branch.last_build.started_at);
+  const finishedAt = response.default_branch.last_build.finishedAt
+    ? moment(response.default_branch.last_build.finishedAt)
+    : null;
+  const durationMinutes = finishedAt
+    ? finishedAt.diff(startedAt, 'minutes')
+    : null;
+
   return ({
     error: null,
     name: response.slug,
@@ -50,9 +58,10 @@ const createStatusFromResponse = (response: any): TravisStatus => {
         state: response.default_branch.last_build.state,
         previousState: response.default_branch.last_build.previous_state,
         commit: response.default_branch.last_build.commit.message,
-        startedAt: response.default_branch.last_build.started_at,
-        finishedAt: response.default_branch.last_build.finished_at,
+        startedAt,
+        finishedAt,
         author: response.default_branch.last_build.created_by.login,
+        durationMinutes,
       },
     },
   });
