@@ -5,9 +5,11 @@ import { ButtonProps } from '@material-ui/core/Button';
 
 const AdapterLink = (
   React.forwardRef(
-    (props, ref) => (
-      // @ts-ignore
-      <Link innerRef={ref} {...props} />
+    (props: { to: string }, ref: React.Ref<any>) => (
+      <Link
+        innerRef={ref}
+        {...props}
+      />
     ),
   )
 );
@@ -21,8 +23,11 @@ const RouterButton: React.FC<RouterButtonProps> = ({
   // tslint:disable-next-line:trailing-comma
   ...buttonProps
 }) => (
-  // @ts-ignore
-  <Button {...buttonProps} component={AdapterLink} to={to} />
+  <Button
+    {...buttonProps}
+    component={AdapterLink}
+    to={to}
+  />
 );
 
 export { RouterButton };

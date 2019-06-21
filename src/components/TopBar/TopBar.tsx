@@ -19,7 +19,13 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const TopBar: React.FC = () => {
+interface TopBarProps {
+  setDrawerOpen: (newValue: boolean) => void;
+}
+
+const TopBar: React.FC<TopBarProps> = ({
+  setDrawerOpen,
+}) => {
   const classes = useStyles();
 
   return (
@@ -30,7 +36,7 @@ const TopBar: React.FC = () => {
           className={classes.menuButton}
           color="inherit"
           aria-label="Menu"
-          onClick={() => alert('soon')}
+          onClick={() => { setDrawerOpen(true); }}
         >
           <MenuIcon/>
         </IconButton>
