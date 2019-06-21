@@ -13,10 +13,12 @@ const Router: React.FC<RouterProps> = ({
 }) => (
   <BrowserRouter>
     {children}
-    <Switch>
-      <Route path="/" exact component={Form}/>
-      <Route path="/dashboard" component={Dashboard}/>
-    </Switch>
+    <div style={{ marginTop: 30 }}>
+      <Switch>
+        <Route path="/" exact component={Form}/>
+        <Route path="/dashboard" component={Dashboard}/>
+      </Switch>
+    </div>
   </BrowserRouter>
 );
 

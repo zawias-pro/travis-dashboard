@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 
 import { StatusCard } from './components/StatusCard';
 import { ErrorStatusCard } from './components/ErrorStatusCard';
@@ -41,6 +41,7 @@ class Dashboard extends React.Component<{}, DashboardState> {
     }
 
     return (
+      <Container maxWidth="xl">
       <Grid container spacing={5}>
         {statuses.map((status: TravisStatus) => (
           <Grid item key={status.name} xs={4}>
@@ -52,6 +53,7 @@ class Dashboard extends React.Component<{}, DashboardState> {
           </Grid>
         ))}
       </Grid>
+      </Container>
     );
   }
 

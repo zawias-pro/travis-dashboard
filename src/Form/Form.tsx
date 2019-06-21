@@ -52,6 +52,7 @@ class Form extends React.Component<{}, FormState> {
               margin="normal"
               value={accessTokenValue}
               onChange={this.onChange(ACCESS_TOKEN_LS_KEY)}
+              type="password"
             />
             <TextField
               disabled={disabled}

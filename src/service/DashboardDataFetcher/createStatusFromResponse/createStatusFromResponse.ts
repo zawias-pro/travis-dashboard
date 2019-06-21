@@ -40,8 +40,8 @@ const createStatusFromResponse = (response: any): TravisStatus => {
   }
 
   const startedAt = moment(response.default_branch.last_build.started_at);
-  const finishedAt = response.default_branch.last_build.finishedAt
-    ? moment(response.default_branch.last_build.finishedAt)
+  const finishedAt = response.default_branch.last_build.finished_at
+    ? moment(response.default_branch.last_build.finished_at)
     : null;
   const durationMinutes = finishedAt
     ? finishedAt.diff(startedAt, 'minutes')

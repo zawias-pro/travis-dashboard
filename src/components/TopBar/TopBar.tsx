@@ -1,8 +1,7 @@
 import React from 'react';
 import MenuIcon from '@material-ui/icons/Menu';
 import {
-  AppBar, Button, createStyles, IconButton, makeStyles, Theme, Toolbar,
-  Typography,
+  AppBar, createStyles, IconButton, makeStyles, Theme, Toolbar, Typography,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -43,7 +42,6 @@ const TopBar: React.FC<TopBarProps> = ({
         <Typography variant="h6" className={classes.title}>
           Travieso
         </Typography>
-        <Button color="inherit">Login</Button>
       </Toolbar>
     </AppBar>
   );

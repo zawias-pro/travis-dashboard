@@ -2,10 +2,10 @@ import { ColorProperty } from 'csstype';
 
 import { TravisStatus } from '../../interface/TravisStatus';
 
-const COLOR_ERROR   = 'red';
-const COLOR_NO_DATA = 'gray';
-const COLOR_SUCCESS = 'green';
-const COLOR_PENDING = 'orange';
+const COLOR_ERROR   = 'rgba(255, 0,   0,   0.5)';
+const COLOR_NO_DATA = 'rgba(206, 206, 206, 0.5)';
+const COLOR_SUCCESS = 'rgba(0,   204, 35,  0.5)';
+const COLOR_PENDING = 'rgba(170, 133, 18,  0.5)';
 
 const getCardColor = (status: TravisStatus): ColorProperty => {
   if (!status.body) {
