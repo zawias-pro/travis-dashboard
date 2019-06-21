@@ -45,7 +45,6 @@ class DashboardDataFetcher {
       `${serverAddress}/repo/${repository.slug}?include=branch.last_build`,
       {
         'Travis-Api-Version': 3,
-        'User-Agent': 'Travis dashboard by zawias-pro',
         ...authorizationHeader,
       },
     ).pipe(

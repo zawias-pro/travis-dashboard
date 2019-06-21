@@ -5,6 +5,7 @@ import { TravisStatus } from '../interface/TravisStatus';
 import { RepoStringParser } from '../service/RepoStringParser';
 import { ACCESS_TOKEN_LS_KEY, TRAVIS_REPOS_LS_KEY } from '../config';
 import { DashboardDataFetcher } from '../service/DashboardDataFetcher';
+import { Status } from "./components/Status";
 
 interface DashboardState {
   statuses: any;
@@ -40,16 +41,10 @@ class Dashboard extends Component<{}, DashboardState> {
 
     return (
       <div>
-        Dashboard
         <RouterButton to="/">Back</RouterButton>
         <br />
-        {/*<pre>*/}
-        {/*  {JSON.stringify(this.state.statuses, null, 2)}*/}
-        {/*</pre>*/}
         {statuses.map((status: TravisStatus) => (
-          <div>
-            {status.name}
-          </div>
+          <Status status={status} key={status.name} />
         ))}
       </div>
     );

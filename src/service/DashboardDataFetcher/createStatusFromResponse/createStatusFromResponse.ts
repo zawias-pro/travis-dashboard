@@ -1,14 +1,13 @@
 import * as yup from 'yup';
 
 import { TravisStatus } from '../../../interface/TravisStatus';
-import { ResponseSchemaError } from '../../../error/ResponseSchemaError';
 
-const isValid = (response: any) => {
+const getValidationError = (response: any): Error | null => {
   const schema = yup.object().shape({
     name: yup.string(),
     slug: yup.string(),
-    description: yup.string(),
-    language: yup.string(),
+    description: yup.string().nullable(),
+    language: yup.string().nullable(),
     default_branch: yup.object().shape({
       name: yup.string(),
       last_build: yup.object().shape({
@@ -24,12 +23,20 @@ const isValid = (response: any) => {
     }),
   });
 
-  return schema.isValidSync(response);
+  try {
+    schema.validateSync(response);
+
+    return null;
+  } catch (e) {
+    return e;
+  }
 };
 
 const createStatusFromResponse = (response: any): TravisStatus => {
-  if (!isValid(response)) {
-    throw new ResponseSchemaError();
+  const validationError = getValidationError(response);
+
+  if (validationError !== null) {
+    throw validationError;
   }
 
   return ({

@@ -2,8 +2,8 @@ export interface TravisStatus {
   name: string;
   error: Error | null;
   body?: {
-    description: string;
-    language: string;
+    description: string | null;
+    language: string | null;
     branch: string;
     build: {
       state: string;
