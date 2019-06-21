@@ -39,8 +39,11 @@ class Form extends React.Component<{}, FormState> {
           <Avatar>
             <LockOutlinedIcon/>
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Travis dashboard
+          <Typography component="h1" variant="h2">
+            Travieso
+          </Typography>
+          <Typography component="h2" variant="h5">
+            Dashboard for Travis CI
           </Typography>
           <form>
             <TextField

@@ -1,1 +1,3 @@
-# travis-dashboard
+# Travieso
+
+Dashboard for Travis CI.
