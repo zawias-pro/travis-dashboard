@@ -1,8 +1,10 @@
 import { from, Observable, of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { combineAll, delay, map, mergeMap, catchError } from 'rxjs/operators';
+import { combineAll, map, catchError, concatMap } from 'rxjs/operators';
 
 import { Repository } from '../../interface/Repository';
+import { TravisResponse } from '../../interface/TravisResponse';
+import { createStatusFromResponse } from './createStatusFromResponse';
 
 class DashboardDataFetcher {
   private accessToken: string;
@@ -17,7 +19,7 @@ class DashboardDataFetcher {
     const item$ = from(this.repositories);
 
     const request$ = item$.pipe(
-      mergeMap(item => this.getResponse(item)),
+      concatMap(item => this.getResponse(item)),
     );
 
     const result$ = request$.pipe(
@@ -28,14 +30,7 @@ class DashboardDataFetcher {
     result$.subscribe(emit);
   }
 
-  private getMockResponse = (item: Repository) => {
-    return of('this is travis response for' + item.name)
-      .pipe(
-          delay(Math.random() * 3000),
-      );
-  }
-
-  private getResponse = (repository: Repository): Observable<any> => {
+  private getResponse = (repository: Repository): Observable<TravisResponse> => {
     const isTokenEmpty = this.accessToken === '';
 
     const serverAddress = isTokenEmpty
@@ -54,25 +49,11 @@ class DashboardDataFetcher {
         ...authorizationHeader,
       },
     ).pipe(
-      map((response: any) => ({
-        name: response.name,
-        fullName: response.slug,
-        description: response.description,
-        language: response.github_language,
-        branch: response.default_branch.name,
-        build: {
-          state: response.default_branch.last_build.state,
-          previousState: response.default_branch.last_build.previous_state,
-          commit: response.default_branch.last_build.commit.message,
-          startedAt: response.default_branch.last_build.started_at,
-          finishedAt: response.default_branch.last_build.finished_at,
-          author: response.default_branch.last_build.created_by.login,
-        },
+      map(createStatusFromResponse),
+      catchError((error: Error) => of({
+        name: repository.name,
+        error,
       })),
-      // @ts-ignore
-      catchError(error => {
-        return of(error);
-      }),
     );
   }
 }

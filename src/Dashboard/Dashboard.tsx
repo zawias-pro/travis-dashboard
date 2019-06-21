@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { RouterButton } from '../components/RouterButton';
+import { TravisResponse } from '../interface/TravisResponse';
 import { RepoStringParser } from '../service/RepoStringParser';
 import { ACCESS_TOKEN_LS_KEY, TRAVIS_REPOS_LS_KEY } from '../config';
 import { DashboardDataFetcher } from '../service/DashboardDataFetcher';
@@ -43,7 +44,7 @@ class Dashboard extends Component<{}, DashboardState> {
     );
   }
 
-  private updateDashboardData = (data: any) => {
+  private updateDashboardData = (data: TravisResponse[]) => {
     this.setState({
       data,
     });
