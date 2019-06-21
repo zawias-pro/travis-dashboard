@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
 import { RouterButton } from '../components/RouterButton';
-import { TravisResponse } from '../interface/TravisResponse';
+import { TravisStatus } from '../interface/TravisStatus';
 import { RepoStringParser } from '../service/RepoStringParser';
 import { ACCESS_TOKEN_LS_KEY, TRAVIS_REPOS_LS_KEY } from '../config';
 import { DashboardDataFetcher } from '../service/DashboardDataFetcher';
 
 interface DashboardState {
-  data: any;
+  statuses: any;
 }
 
 class Dashboard extends Component<{}, DashboardState> {
@@ -17,7 +17,7 @@ class Dashboard extends Component<{}, DashboardState> {
     super(props);
 
     this.state = {
-      data: null,
+      statuses: null,
     };
 
     const accessKey = localStorage.getItem(ACCESS_TOKEN_LS_KEY) || '';
@@ -32,21 +32,32 @@ class Dashboard extends Component<{}, DashboardState> {
   }
 
   public render() {
+    const { statuses } = this.state;
+
+    if (!statuses) {
+      return <div>Loading...</div>;
+    }
+
     return (
       <div>
         Dashboard
         <RouterButton to="/">Back</RouterButton>
         <br />
-        <pre>
-          {JSON.stringify(this.state.data, null, 2)}
-        </pre>
+        {/*<pre>*/}
+        {/*  {JSON.stringify(this.state.statuses, null, 2)}*/}
+        {/*</pre>*/}
+        {statuses.map((status: TravisStatus) => (
+          <div>
+            {status.name}
+          </div>
+        ))}
       </div>
     );
   }
 
-  private updateDashboardData = (data: TravisResponse[]) => {
+  private updateDashboardData = (statuses: TravisStatus[]) => {
     this.setState({
-      data,
+      statuses,
     });
   }
 }

@@ -3,7 +3,7 @@ import { ajax } from 'rxjs/ajax';
 import { combineAll, map, catchError, concatMap } from 'rxjs/operators';
 
 import { Repository } from '../../interface/Repository';
-import { TravisResponse } from '../../interface/TravisResponse';
+import { TravisStatus } from '../../interface/TravisStatus';
 import { createStatusFromResponse } from './createStatusFromResponse';
 
 class DashboardDataFetcher {
@@ -30,7 +30,7 @@ class DashboardDataFetcher {
     result$.subscribe(emit);
   }
 
-  private getResponse = (repository: Repository): Observable<TravisResponse> => {
+  private getResponse = (repository: Repository): Observable<TravisStatus> => {
     const isTokenEmpty = this.accessToken === '';
 
     const serverAddress = isTokenEmpty

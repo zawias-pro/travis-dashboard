@@ -1,5 +1,6 @@
 import * as yup from 'yup';
-import { TravisResponse } from '../../../interface/TravisResponse';
+
+import { TravisStatus } from '../../../interface/TravisStatus';
 import { ResponseSchemaError } from '../../../error/ResponseSchemaError';
 
 const isValid = (response: any) => {
@@ -26,7 +27,7 @@ const isValid = (response: any) => {
   return schema.isValidSync(response);
 };
 
-const createStatusFromResponse = (response: any): TravisResponse => {
+const createStatusFromResponse = (response: any): TravisStatus => {
   if (!isValid(response)) {
     throw new ResponseSchemaError();
   }

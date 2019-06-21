@@ -1,4 +1,4 @@
-export interface TravisResponse {
+export interface TravisStatus {
   name: string;
   error: Error | null;
   body?: {
