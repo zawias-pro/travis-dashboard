@@ -1,9 +1,10 @@
 import React from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
-  Avatar, Button, Container, CssBaseline, TextField, Typography,
+  Avatar, Container, CssBaseline, TextField, Typography,
 } from '@material-ui/core';
 
+import { RouterButton } from '../components/RouterButton';
 import { ACCESS_TOKEN_LS_KEY, TRAVIS_REPOS_LS_KEY } from '../config';
 
 interface FormState {
@@ -59,14 +60,15 @@ class Form extends React.Component<{}, FormState> {
               value={travisReposValue}
               onChange={this.onChange(TRAVIS_REPOS_LS_KEY)}
             />
-            <Button
+            <RouterButton
               disabled={disabled}
               variant="contained"
               color="primary"
               fullWidth
+              to="/dashboard"
             >
               Go to dashboard
-            </Button>
+            </RouterButton>
           </form>
         </div>
       </Container>
