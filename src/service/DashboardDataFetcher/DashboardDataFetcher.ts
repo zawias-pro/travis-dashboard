@@ -1,7 +1,8 @@
-import { from, Observable, of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { combineAll, map, catchError, concatMap } from 'rxjs/operators';
+import { from, interval, Observable, of } from 'rxjs';
+import { combineAll, map, catchError, concatMap, startWith } from 'rxjs/operators';
 
+import { UPDATE_MINUTES } from '../../config';
 import { Repository } from '../../interface/Repository';
 import { TravisStatus } from '../../interface/TravisStatus';
 import { createStatusFromResponse } from './createStatusFromResponse';
@@ -16,6 +17,17 @@ class DashboardDataFetcher {
   }
 
   public start = (emit: any): void => {
+    interval(1000 * 60 * UPDATE_MINUTES)
+      .pipe(
+        startWith(0),
+      )
+      .subscribe(() => {
+        emit([]);
+        this.updateStatuses(emit);
+      });
+  }
+
+  public updateStatuses = (emit: any): void => {
     from(this.repositories)
       .pipe(
         concatMap(item => this.getResponse(item)),

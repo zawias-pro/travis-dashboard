@@ -20,7 +20,7 @@ class Dashboard extends React.Component<{}, DashboardState> {
     super(props);
 
     this.state = {
-      statuses: null,
+      statuses: [],
     };
 
     const accessKey = localStorage.getItem(ACCESS_TOKEN_LS_KEY) || '';
@@ -37,7 +37,7 @@ class Dashboard extends React.Component<{}, DashboardState> {
   public render() {
     const {statuses} = this.state;
 
-    if (!statuses) {
+    if (statuses.length === 0) {
       return (
         <CircularProgress
           size={100}
