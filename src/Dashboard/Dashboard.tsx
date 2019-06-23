@@ -41,32 +41,32 @@ class Dashboard extends React.Component<{}, DashboardState> {
       return (
         <CircularProgress
           size={100}
-          style={{ margin: 'calc(50vh - 150px) calc(50vw - 50px) 0' }}
+          style={{margin: 'calc(50vh - 150px) calc(50vw - 50px) 0'}}
         />
       );
     }
 
     return (
       <Container maxWidth="xl">
-      <Grid container spacing={5}>
-        {statuses.map((status: TravisStatus) => {
-          const commonStyles = {
-            backgroundColor: getCardColor(status),
-            padding: 8,
-            overflow: 'hidden',
-          };
+        <Grid container spacing={5}>
+          {statuses.map((status: TravisStatus) => {
+            const commonStyles = {
+              backgroundColor: getCardColor(status),
+              padding: 8,
+              overflow: 'hidden',
+            };
 
-          return (
-            <Grid item key={status.name} xs={12} md={6} xl={4}>
-              {status.error ? (
-                <ErrorStatusCard status={status} styles={commonStyles}/>
-              ) : (
-                <StatusCard status={status} styles={commonStyles}/>
-              )}
-            </Grid>
-          );
-        })}
-      </Grid>
+            return (
+              <Grid item key={status.name} xs={12} md={6} xl={4}>
+                {status.error ? (
+                  <ErrorStatusCard status={status} styles={commonStyles}/>
+                ) : (
+                  <StatusCard status={status} styles={commonStyles}/>
+                )}
+              </Grid>
+            );
+          })}
+        </Grid>
       </Container>
     );
   }

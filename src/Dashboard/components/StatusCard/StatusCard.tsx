@@ -47,7 +47,7 @@ const StatusCard: React.FunctionComponent<StatusCardProps> = ({
   return (
     <Paper className={classes.paper} style={styles}>
       <div style={{display: 'flex', flexDirection: 'column', alignContent: 'spaceBetween'}}>
-        <Typography variant="h5">
+        <Typography variant="h5" style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
           {status.name} <Chip label={branch}/>
         </Typography>
         <Grid container>

@@ -1,8 +1,5 @@
 import React from 'react';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import {
-  Avatar, Container, TextField, Typography,
-} from '@material-ui/core';
+import { Container, TextField, Typography } from '@material-ui/core';
 
 import { RouterButton } from '../components/RouterButton';
 import { ACCESS_TOKEN_LS_KEY, TRAVIS_REPOS_LS_KEY } from '../config';
@@ -35,13 +32,10 @@ class Form extends React.Component<{}, FormState> {
     return (
       <Container maxWidth="xs" component="main">
         <div>
-          <Avatar>
-            <LockOutlinedIcon/>
-          </Avatar>
-          <Typography component="h1" variant="h2">
+          <Typography component="h1" variant="h2" style={{ marginBottom: 30, textAlign: 'center' }}>
             Travieso
           </Typography>
-          <Typography component="h2" variant="h5">
+          <Typography component="h2" variant="h5" style={{ marginBottom: 30, textAlign: 'center' }}>
             Dashboard for Travis CI
           </Typography>
           <form>
@@ -69,6 +63,7 @@ class Form extends React.Component<{}, FormState> {
               color="primary"
               fullWidth
               to="/dashboard"
+              style={{ marginTop: 30 }}
             >
               Go to dashboard
             </RouterButton>
