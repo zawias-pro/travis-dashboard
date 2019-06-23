@@ -1,9 +1,11 @@
 import React from 'react';
+import { RouteComponentProps } from 'react-router';
 import { Drawer as DrawerComponent } from '@material-ui/core';
 
 import { RouterButton } from '../RouterButton';
+import { ArrowBack } from "@material-ui/icons";
 
-interface DrawerProps {
+interface DrawerProps extends RouteComponentProps<any> {
   isOpen: boolean;
   setDrawerOpen: (newValue: boolean) => void;
 }
@@ -11,19 +13,26 @@ interface DrawerProps {
 const Drawer: React.FC<DrawerProps> = ({
   isOpen,
   setDrawerOpen,
+  location,
 }) => {
   return (
     <DrawerComponent
       open={isOpen}
-      onClose={() => { setDrawerOpen(false); }}
+      onClose={() => {
+        setDrawerOpen(false);
+      }}
     >
-      <div style={{ width: 500 }}>
+      <div style={{width: '30vw', padding: 10}}>
         <RouterButton
           to="/"
           color="primary"
           variant="contained"
-          onClick={() => { setDrawerOpen(false); }}
+          onClick={() => {
+            setDrawerOpen(false);
+          }}
+          disabled={location.pathname === '/'}
         >
+          <ArrowBack/>
           Back
         </RouterButton>
       </div>

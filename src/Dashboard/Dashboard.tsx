@@ -1,9 +1,10 @@
 import React from 'react';
-import { Container, Grid } from '@material-ui/core';
+import { Container, Grid, CircularProgress } from '@material-ui/core';
 
+import { getCardColor } from './getCardColor';
 import { StatusCard } from './components/StatusCard';
-import { ErrorStatusCard } from './components/ErrorStatusCard';
 import { TravisStatus } from '../interface/TravisStatus';
+import { ErrorStatusCard } from './components/ErrorStatusCard';
 import { RepoStringParser } from '../service/RepoStringParser';
 import { ACCESS_TOKEN_LS_KEY, TRAVIS_REPOS_LS_KEY } from '../config';
 import { DashboardDataFetcher } from '../service/DashboardDataFetcher';
@@ -37,21 +38,34 @@ class Dashboard extends React.Component<{}, DashboardState> {
     const {statuses} = this.state;
 
     if (!statuses) {
-      return <div>Loading...</div>;
+      return (
+        <CircularProgress
+          size={100}
+          style={{ margin: 'calc(50vh - 150px) calc(50vw - 50px) 0' }}
+        />
+      );
     }
 
     return (
       <Container maxWidth="xl">
       <Grid container spacing={5}>
-        {statuses.map((status: TravisStatus) => (
-          <Grid item key={status.name} xs={4}>
-            {status.error ? (
-              <ErrorStatusCard status={status}/>
-            ) : (
-              <StatusCard status={status}/>
-            )}
-          </Grid>
-        ))}
+        {statuses.map((status: TravisStatus) => {
+          const commonStyles = {
+            backgroundColor: getCardColor(status),
+            padding: 8,
+            overflow: 'hidden',
+          };
+
+          return (
+            <Grid item key={status.name} xs={12} md={6} xl={4}>
+              {status.error ? (
+                <ErrorStatusCard status={status} styles={commonStyles}/>
+              ) : (
+                <StatusCard status={status} styles={commonStyles}/>
+              )}
+            </Grid>
+          );
+        })}
       </Grid>
       </Container>
     );
@@ -59,7 +73,10 @@ class Dashboard extends React.Component<{}, DashboardState> {
 
   private updateDashboardData = (statuses: TravisStatus[]) => {
     this.setState({
-      statuses,
+      statuses: statuses.map(status => ({
+        ...status,
+        name: status.name.split('/')[1],
+      })),
     });
   }
 }

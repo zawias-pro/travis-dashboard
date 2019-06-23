@@ -1,5 +1,7 @@
 import React from 'react';
-import { Chip, createStyles, Grid, makeStyles, Paper, Theme, Typography } from '@material-ui/core';
+import {
+  Chip, createStyles, Grid, makeStyles, Paper, Theme, Typography,
+} from '@material-ui/core';
 import {
   Message as MessageIcon,
   Person as PersonIcon,
@@ -7,8 +9,7 @@ import {
   Timer as TimeIcon,
 } from '@material-ui/icons';
 
-import { getCardColor } from '../../getCardColor';
-import { TravisStatus } from '../../../interface/TravisStatus';
+import { StatusCardProps } from '../../StatusCardProps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,12 +31,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface StatusProps {
-  status: TravisStatus;
-}
-
-const StatusCard: React.FunctionComponent<StatusProps> = ({
+const StatusCard: React.FunctionComponent<StatusCardProps> = ({
   status,
+  styles,
 }) => {
   const classes = useStyles();
 
@@ -44,12 +42,11 @@ const StatusCard: React.FunctionComponent<StatusProps> = ({
   }
 
   const {build, branch} = status.body;
-  const backgroundColor = getCardColor(status);
   const commitTitle = build.commit.split(/\n/)[0];
 
   return (
-    <Paper className={classes.paper} style={{backgroundColor}}>
-      <div style={{display: 'flex', flexDirection: 'column', alignContent: 'spaceBetween', height: 150 }}>
+    <Paper className={classes.paper} style={styles}>
+      <div style={{display: 'flex', flexDirection: 'column', alignContent: 'spaceBetween'}}>
         <Typography variant="h5">
           {status.name} <Chip label={branch}/>
         </Typography>

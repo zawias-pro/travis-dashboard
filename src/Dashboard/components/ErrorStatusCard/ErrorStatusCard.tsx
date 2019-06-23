@@ -1,31 +1,23 @@
 import React from 'react';
 import { Paper, Typography } from '@material-ui/core';
 
-import { getCardColor } from '../../getCardColor';
-import { TravisStatus } from '../../../interface/TravisStatus';
+import { StatusCardProps } from '../../StatusCardProps';
 
-interface ErrorStatusProps {
-  status: TravisStatus;
-}
-
-const ErrorStatusCard: React.FunctionComponent<ErrorStatusProps> = ({
+const ErrorStatusCard: React.FunctionComponent<StatusCardProps> = ({
   status,
-}) => {
-  const backgroundColor = getCardColor(status);
-
-  return (
-    <Paper style={{ padding: 10, backgroundColor }}>
-      <Typography variant="h5">
-        {status.name}
-      </Typography>
-      <div>
-        <p>Error:</p>
-        <pre>
+  styles,
+}) => (
+  <Paper style={styles}>
+    <Typography variant="h5">
+      {status.name}
+    </Typography>
+    <div>
+      <p>Error:</p>
+      <pre>
           {status.error!.message}
         </pre>
-      </div>
-    </Paper>
-  );
-};
+    </div>
+  </Paper>
+);
 
 export { ErrorStatusCard };
