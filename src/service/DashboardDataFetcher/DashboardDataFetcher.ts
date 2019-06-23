@@ -16,18 +16,13 @@ class DashboardDataFetcher {
   }
 
   public start = (emit: any): void => {
-    const item$ = from(this.repositories);
-
-    const request$ = item$.pipe(
-      concatMap(item => this.getResponse(item)),
-    );
-
-    const result$ = request$.pipe(
-      map(response => of(response)),
-      combineAll(),
-    );
-
-    result$.subscribe(emit);
+    from(this.repositories)
+      .pipe(
+        concatMap(item => this.getResponse(item)),
+        map(response => of(response)),
+        combineAll(),
+      )
+      .subscribe(emit);
   }
 
   private getResponse = (repository: Repository): Observable<TravisStatus> => {
