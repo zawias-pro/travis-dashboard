@@ -2,8 +2,8 @@ import { ajax } from 'rxjs/ajax';
 import { from, interval, Observable, of } from 'rxjs';
 import { combineAll, map, catchError, concatMap, startWith } from 'rxjs/operators';
 
-import { UPDATE_MINUTES } from '../../config';
 import { Repository } from '../../interface/Repository';
+import { SHOW_LOADER, UPDATE_MINUTES } from '../../config';
 import { TravisStatus } from '../../interface/TravisStatus';
 import { createStatusFromResponse } from './createStatusFromResponse';
 
@@ -22,7 +22,9 @@ class DashboardDataFetcher {
         startWith(0),
       )
       .subscribe(() => {
-        emit([]);
+        if (SHOW_LOADER) {
+          emit([]);
+        }
         this.updateStatuses(emit);
       });
   }
